@@ -6,3 +6,4 @@ gem "dotenv"
 gem "sinatra"
 gem "sinatra-partial"
 gem "sinatra-json"
+gem 'rack'

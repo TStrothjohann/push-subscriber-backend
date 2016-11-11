@@ -39,6 +39,7 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv
+  rack
   sinatra
   sinatra-json
   sinatra-partial
