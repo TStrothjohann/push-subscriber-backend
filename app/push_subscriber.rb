@@ -20,7 +20,7 @@ class PushSubscriber < Sinatra::Base
     json mytag.ua_get_user_info
   end
 
-  post '/add-tag' do
+  get '/add-tag' do
     mytag = Tag.new
     mytag.name = params['tag_name']
     mytag.named_user = params['ssoid']
@@ -28,7 +28,7 @@ class PushSubscriber < Sinatra::Base
     json mytag.ua_add_tag
   end
 
-  post '/get-tags' do
+  get '/get-tags' do
     mytag = Tag.new
     mytag.named_user = params['ssoid']
     json mytag.ua_get_info    

@@ -36,6 +36,9 @@ class Tag
     begin
       user = ua_named_user.lookup
       tags = user['body']['named_user']['tags'][@tag_group_name]
+      if !tags 
+        tags = []
+      end
     rescue
       tags = []
     end
