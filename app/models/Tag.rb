@@ -1,6 +1,3 @@
-require "urbanairship"
-UA = Urbanairship
-
 class Tag
   attr_accessor :name, :named_user, :tag_group_name
   
@@ -53,7 +50,7 @@ class Tag
     user = ua_named_user.lookup
     channels = user['body']['named_user']['channels']
     channels.each do |chn|
-      active_channels.push(chn['device_type']) if chn['installed'] && chn['opt_in']
+      active_channels.push(chn) if chn['installed'] && chn['opt_in']
     end
     return active_channels
   end

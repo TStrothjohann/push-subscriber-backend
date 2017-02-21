@@ -1,6 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/partial'
-require "sinatra/json"
+require 'sinatra/json'
 require 'dotenv'
 
 class PushSubscriber < Sinatra::Base
@@ -18,6 +18,28 @@ class PushSubscriber < Sinatra::Base
     mytag = Tag.new
     mytag.named_user = params['ssoid']
     json mytag.ua_get_user_info
+  end
+
+  get '/channel' do
+    channel = Channel.new
+    channel.id = params['channel_id']
+    json channel.ua_get_channel_info
+  end
+
+  get '/channel/has-tag' do
+    channel = Channel.new
+    channel.id = params['channel_id']
+    channel.tag_name = params['tag_name']
+    channel.tag_group_name = params['tag_group_name']
+    json channel.ua_channel_has_tag
+  end
+
+  get '/channel/add-tag' do
+    channel = Channel.new
+    channel.id = params['channel_id']
+    channel.tag_name = params['tag_name']
+    channel.tag_group_name = params['tag_group_name']
+    json channel.ua_channel_add_tag
   end
 
   get '/add-tag' do
