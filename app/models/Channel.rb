@@ -44,19 +44,27 @@ class Channel
     rescue
       tags = []
     end
-    
     return tags.include? @tag_name
   end
 
-  # def ua_active_channels
-  #   active_channels = []
-  #   ua_named_user = UA::NamedUser.new(client: @airship)
-  #   ua_named_user.named_user_id = @named_user
-  #   user = ua_named_user.lookup
-  #   channels = user['body']['named_user']['channels']
-  #   channels.each do |chn|
-  #     active_channels.push(chn) if chn['installed'] && chn['opt_in']
-  #   end
-  #   return active_channels
-  # end
+  def ua_remove_tag
+    if @tag_group_name === "subscriptions"
+      return "You cannot remove tags from this tag group"
+    else
+      channel_tags = UA::ChannelTags.new(client: @airship)
+      channel_client = UA::ChannelInfo.new(client: @airship)
+      channel_info = channel_client.lookup(uuid: @id)
+      platform = channel_info["device_type"]
+
+      case platform
+      when "ios"
+        channel_tags.set_audience(ios: @id)        
+      when "android"
+        channel_tags.set_audience(android: @id)
+      end
+      
+      channel_tags.remove(group_name: @tag_group_name, tags: [@tag_name])
+      channel_tags.send_request
+    end
+  end
 end
