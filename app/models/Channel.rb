@@ -34,7 +34,7 @@ class Channel
   
   def ua_channel_has_tag
     channel_client = UA::ChannelInfo.new(client: @airship)
-
+    info = Hash.new
     begin
       channel_info = channel_client.lookup(uuid: @id)
       tags = channel_info['tag_groups'][@tag_group_name]
@@ -44,7 +44,11 @@ class Channel
     rescue
       tags = []
     end
-    return tags.include? @tag_name
+    
+    info['has_tag'] = tags.include? @tag_name
+    info['opt_in'] = channel_info['opt_in']
+
+    return info
   end
 
   def ua_remove_tag
