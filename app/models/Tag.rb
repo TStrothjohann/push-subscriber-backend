@@ -54,4 +54,16 @@ class Tag
     end
     return active_channels
   end
+
+  def ua_remove_tag
+    if @tag_group_name === "subscriptions"
+      return "You cannot remove tags from this tag group"
+    else
+      named_user_tags = UA::NamedUserTags.new(client: @airship)
+      named_user_ids = [@named_user]
+      named_user_tags.set_audience(user_ids: named_user_ids)
+      named_user_tags.remove(group_name: @tag_group_name, tags: @name)
+      named_user_tags.send_request
+    end
+  end
 end

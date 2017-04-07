@@ -72,6 +72,14 @@ class PushSubscriber < Sinatra::Base
     json :has_tag => mytag.ua_has_tag 
   end
 
+  get '/remove-tag' do
+    mytag = Tag.new
+    mytag.name = params['tag_name']
+    mytag.named_user = params['ssoid']
+    mytag.tag_group_name = params['tag_group_name']
+    json mytag.ua_remove_tag
+  end
+
   get '/active-channels' do
     mytag = Tag.new
     mytag.named_user = params['ssoid']    
