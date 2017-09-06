@@ -7,7 +7,7 @@ class PushSubscriber < Sinatra::Base
   register Sinatra::Partial
   
   before do
-    response['Access-Control-Allow-Origin'] = @cors_domain = "http://www.zeit.de"
+    response['Access-Control-Allow-Origin'] = @cors_domain = "*"
   end
   
   get '/' do
