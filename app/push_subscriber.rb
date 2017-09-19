@@ -86,4 +86,14 @@ class PushSubscriber < Sinatra::Base
     json :active_channels => mytag.ua_active_channels
   end
 
+  get '/push' do
+    push = Push.new
+    push.channel_id = params['channel_id']
+    push.message = params['message']
+    push.device_type = params['device_type']
+    push.title = params['title']
+    json push.push_message_to_channel
+  end
+
+
 end
