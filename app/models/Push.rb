@@ -12,10 +12,13 @@ class Push
   def push_message_to_channel
     if @device_type == "ios"
       channel_key = "ios_channel"
+      notification_key = "ios"
     elsif @device_type == "android"
       channel_key = "android_channel"
+      notification_key = "android"
     else
       channel_key = "channel"
+      notification_key = "web"
     end 
     
     data = {
@@ -24,7 +27,7 @@ class Push
       },
       'notification' => {
         'alert' => @message,
-        'web' => {
+        notification_key => {
           'title' => @title ? @title : ''
         }
       },
